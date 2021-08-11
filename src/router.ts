@@ -1,20 +1,28 @@
 import express, { Router, Request, Response } from 'express';
+import database from './database';
 
 const router = Router();
 router.use(express.json());
+router.use(express.raw());
 
-let internalCount = 0;
-let pkmn: any[] = [];
-
-router.get('/', (req: any, res: any) => {
-	res.json({ pokemons: pkmn, count: internalCount });
+router.get('/', async (req: any, res: any) => {
+	let list: any = await database('pokemons').select('*');
+	const itens = list.map((pkmn: any) => {
+		return {
+			name: pkmn.name,
+		}
+	});
+	res.json(itens);
 });
 
-router.post('/', (req: any, res: any) => {
-	console.log(`recebi: `);
-	console.log(req.body);
-	internalCount = pkmn.push(req.body);
-	res.json({ teste: true });
+router.post('/', async (req: any, res: any) => {
+	let pkmn = {
+		name: req.body.nickname,
+		file: "./p.pkmn"
+	};
+	console.log(pkmn);
+	await database('pokemons').insert(pkmn);
+	res.json(pkmn);
 });
 
 
