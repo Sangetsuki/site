@@ -2,3 +2,4 @@
 **/build
 **/package-lock.json
 *.sqlite3
+*.sqlite

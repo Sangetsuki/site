@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node index.ts",
     "dev": "nodemon --exec ts-node index.ts",
-    "heroku-postbuild": "npx knex migrate:latest && cd client && npm install && npm run build"
+    "heroku-postbuild": "npx knex --knexfile knexfile.ts migrate:latest && cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
